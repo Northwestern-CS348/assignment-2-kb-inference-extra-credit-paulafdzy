@@ -141,8 +141,41 @@ class KnowledgeBase(object):
             string explaining hierarchical support from other Facts and rules
         """
         ####################################################
+       
         # Student code goes here
-
+       # s = "  SUPPORTED BY\n"
+      #  for f in fact_or_rule.supported_by:
+          #  s = s + "    " + str(f.name) + ": "
+         #   s = s + str(f.statement) + " "
+        #    if f.asserted: s = s + "ASSERTED\n"
+            #add the fact or rule using slef.statement
+            #add wheteher it is asserted or not  using self.asserted
+            #add a new line
+       # s = str(fact_or_rule.name) + ": " + str(fact_or_rule.statement) + s
+       # print(s)
+        x= ""
+        s= fact_or_rule
+        if factq(s):
+            x = "fact: " + str(s.statement)
+            if not self.kb_ask(s): print("Fact is not in the KB")
+        else:
+            if not self.kb_ask(s): print("Rule is not in the KB")
+            else: x = "rule: " +  "(" + str(fr.lhs) + ")->" + str(fr.rhs[0]) 
+        x = x + "\n  SUPPORTED BY\n"
+        for n in s.supported_by:
+            x = x + helper(n)
+        return x
+def helper(fr):
+        blah = ""
+        if factq(fr):
+            blah = "    fact: " + str(fr.statement) + "\n"
+            for e in fr.supported_by:
+                blah = blah + helper(e)
+        else:
+            blah = "    rule: " +  "(" + str(fr.lhs) + ")->" + str(fr.rhs[0]) + "\n"
+            for e in fr.supported_by:
+                blah = blah + helper(e)
+        return blah
 
 class InferenceEngine(object):
     def fc_infer(self, fact, rule, kb):
